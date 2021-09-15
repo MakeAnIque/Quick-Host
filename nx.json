@@ -14,12 +14,7 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
       }
     }
   },
@@ -31,5 +26,41 @@
       }
     ]
   },
-  "projects": {}
+  "projects": {
+    "interfaces": {
+      "tags": ["type: lib", "platform: common"]
+    },
+    "model": {
+      "tags": ["type: lib", "platform: common"]
+    },
+    "server-api": {
+      "tags": ["type:app", "platform: server"]
+    },
+    "server-sdk": {
+      "tags": ["type:app", "platform: server"]
+    },
+    "shared-server": {
+      "tags": ["type: lib", "platform: server"]
+    },
+    "shared-web": {
+      "tags": ["type: lib", "platform: web"]
+    },
+    "util": {
+      "tags": ["type: lib", "platform: common"]
+    },
+    "web-admin-admin": {
+      "tags": ["type: app", "platform: web"]
+    },
+    "web-admin-admin-e2e": {
+      "tags": [],
+      "implicitDependencies": ["web-admin-admin"]
+    },
+    "web-website": {
+      "tags": ["type:project", "platform:web"]
+    },
+    "web-website-e2e": {
+      "tags": [],
+      "implicitDependencies": ["web-website"]
+    }
+  }
 }

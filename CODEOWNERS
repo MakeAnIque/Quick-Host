@@ -1,0 +1,8 @@
+# Allow Access with CODEOWNERS files with user mentioned
+# currently both are Developers;
+# mention directory here to allow such user like @username like that or use email
+
+* @Algo-Quest
+
+
+

@@ -14,7 +14,20 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@quickhost/common": ["libs/common/src/index.ts"],
+      "@quickhost/dto": ["libs/dto/src/index.ts"],
+      "@quickhost/interfaces": ["libs/interfaces/src/index.ts"],
+      "@quickhost/model": ["libs/model/src/index.ts"],
+      "@quickhost/server": ["libs/shared/server/src/index.ts"],
+      "@quickhost/shared": ["libs/shared/src/index.ts"],
+      "@quickhost/util": ["libs/util/src/index.ts"],
+      "@quickhost/web": ["libs/shared/web/src/index.ts"],
+      "quickhost-common": ["libs/common/src/index.ts"],
+      "quickhost-server": ["libs/server/src/index.ts"],
+      "quickhost-util": ["libs/utils/src/index.ts"],
+      "quickhost-weblib": ["libs/web/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
