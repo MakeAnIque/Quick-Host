@@ -2,7 +2,8 @@ language: node_js
 node_js:
   - 14
 before_script:
-  - npm i -g npm@version-number
+  - npm i -g npm@latest
   - npm install
+  - nx build server-api
 
 cache: npm
