@@ -1,7 +1,6 @@
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { LoginInstanceVariableType } from '@quick-host/interfaces';
 import { Expose } from 'class-transformer';
-import { Field, InputType, ObjectType } from 'type-graphql';
 
 export class LoginModel {
   @IsOptional()

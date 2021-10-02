@@ -1,3 +1,1 @@
-export function interfaces(): string {
-  return 'interfaces';
-}
+export * from './login/login.interface';
