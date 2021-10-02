@@ -1,1 +1,3 @@
-export * from './lib/interfaces.module';
+export * from './lib/interfaces';
+
+export * from './lib/login/login.interface';

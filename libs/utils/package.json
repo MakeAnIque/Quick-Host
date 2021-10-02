@@ -1,0 +1,7 @@
+{
+  "name": "@quick-host/utils",
+  "version": "0.0.1",
+  "devDependencies": {
+    "@types/node": "^16.10.1"
+  }
+}

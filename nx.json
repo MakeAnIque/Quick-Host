@@ -27,16 +27,16 @@
     ]
   },
   "projects": {
+    "constants": {
+      "tags": ["type:libs", "platform: common"]
+    },
     "interfaces": {
-      "tags": ["type: lib", "platform: common"]
+      "tags": ["type:libs", "platform: common"]
     },
     "model": {
-      "tags": ["type: lib", "platform: common"]
+      "tags": ["type:libs", "platform: common"]
     },
     "server-api": {
-      "tags": ["type:app", "platform: server"]
-    },
-    "server-sdk": {
       "tags": ["type:app", "platform: server"]
     },
     "shared-server": {
@@ -45,8 +45,8 @@
     "shared-web": {
       "tags": ["type: lib", "platform: web"]
     },
-    "util": {
-      "tags": ["type: lib", "platform: common"]
+    "utils": {
+      "tags": ["type:libs", "platform: common"]
     },
     "web-admin-admin": {
       "tags": ["type: app", "platform: web"]

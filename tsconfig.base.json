@@ -15,6 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@quick-host/constants": ["libs/constants/src/index.ts"],
+      "@quick-host/interfaces": ["libs/interfaces/src/index.ts"],
+      "@quick-host/model": ["libs/model/src/index.ts"],
+      "@quick-host/utils": ["libs/utils/src/index.ts"],
       "@quickhost/common": ["libs/common/src/index.ts"],
       "@quickhost/dto": ["libs/dto/src/index.ts"],
       "@quickhost/interfaces": ["libs/interfaces/src/index.ts"],

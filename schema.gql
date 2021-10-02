@@ -1,0 +1,21 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type LoginModelObjectType {
+  email: String!
+  token: String!
+}
+
+type Query {
+  _: String!
+}
+
+type Mutation {
+  login(loginDto: LoginModelInputType!): LoginModelObjectType
+}
+
+input LoginModelInputType {
+  email: String!
+  password: String!
+}
