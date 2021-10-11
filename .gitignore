@@ -41,3 +41,6 @@ Thumbs.db
 
 # Evnvironment file
 .*.env
+
+# schema file
+schema.gql
