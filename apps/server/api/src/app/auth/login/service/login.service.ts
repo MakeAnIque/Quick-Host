@@ -2,7 +2,6 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { compareBcryptPassword } from '@quick-host/utils';
 import { Users } from '@quickhost/server';
 
-import { JwtFactoryClass } from '../dto/factory-class/jwt.factory.class';
 import { PipelineDataflowControl } from '../dto/factory-class/pipeline.factory.class';
 import { LoginRepository } from '../repository/login.repository';
 import { JwtService } from '../../jwt';
@@ -16,15 +15,15 @@ export class LoginService {
 
   public async authenticateUser(inputData): Promise<Users> | null {
     try {
-      const { originalData, queryData } =
+      const { loginOriginalData, loginQueryData } =
         inputData as PipelineDataflowControl as unknown as {
-          originalData;
-          queryData;
+          loginOriginalData;
+          loginQueryData;
         };
 
-      const user = await this.loginRepository.findOne(queryData);
+      const user = await this.loginRepository.findOne(loginQueryData);
 
-      const { password } = originalData;
+      const { password } = loginOriginalData;
       /********************************
        * user not exists
        */
@@ -56,6 +55,7 @@ export class LoginService {
     /********************************
      * construct jwt Token Object Class
      */
+
     const { userId, email /** further add after class construct */ } = userData;
 
     try {

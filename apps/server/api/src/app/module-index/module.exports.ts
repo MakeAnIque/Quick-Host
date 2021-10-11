@@ -15,11 +15,8 @@ import { environment } from '../../environments/environment';
 export const modules = [
   GraphQLModule.forRoot({
     autoSchemaFile: 'schema.gql',
-    context: ({ req }) => ({ req }),
-    formatError: (err: any) => {
-      // const exceptions = err?.extensions.exception;
-      // delete exceptions.stacktrace;
-      // return exceptions;
+    context: ({ req, res }) => ({ req, res }),
+    formatError: (err) => {
       return err;
     },
   }),

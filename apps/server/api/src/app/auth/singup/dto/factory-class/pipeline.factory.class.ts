@@ -3,10 +3,13 @@
  * flow with data consistency make flow control
  */
 
-import { Users } from '@quickhost/server';
-
 // export class PipelineDataflowControl {
 //   constructor(
+//     public signupOriginalData?,
+//     public signupQueryData?,
+//     public signupUserData?,
+//     public signupUserObjectToSave?,
+//     public signupUserAccountCreated?,
 //     public loginOriginalData?,
 //     public loginQueryData?,
 //     public loginUserData?: Users | null,
@@ -15,6 +18,11 @@ import { Users } from '@quickhost/server';
 //   ) {}
 // }
 export interface PipelineDataflowControl {
+  signupOriginalData?: any;
+  signupQueryData?: any;
+  signupUserData?: any;
+  signupUserObjectToSave?: any;
+  signupUserAccountCreated?: any;
   loginOriginalData?: any;
   loginQueryData?: any;
   loginUserData?: any;
@@ -23,6 +31,11 @@ export interface PipelineDataflowControl {
 }
 
 export const pipelineDataflowControl = {
+  signupOriginalData: null,
+  signupQueryData: null,
+  signupUserData: null,
+  signupUserObjectToSave: null,
+  signupUserAccountCreated: null,
   loginOriginalData: null,
   loginQueryData: null,
   loginUserData: null,

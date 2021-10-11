@@ -23,7 +23,5 @@ export class AppComponent {
       password: 34567,
     };
     const y = plainToClass(LoginModel, x);
-
-    console.log(y);
   }
 }

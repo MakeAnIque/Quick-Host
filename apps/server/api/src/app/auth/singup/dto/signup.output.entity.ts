@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class LoginModelObjectType {
+export class SignupModelObjectType {
   @Field(() => String)
   email?: string;
 
@@ -16,14 +16,4 @@ export class LoginModelObjectType {
 
   @Field(() => String)
   token?: string;
-}
-
-export class OutputClass {
-  constructor(
-    public email: string,
-    public token: string,
-    public firstName,
-    public lastName,
-    public isEmailVerified: boolean
-  ) {}
 }

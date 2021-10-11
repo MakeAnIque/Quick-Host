@@ -1,28 +1,35 @@
 import { BadRequestException } from '@nestjs/common';
 import { PipelineDataflowControl } from '../dto/factory-class';
 import { LoginModelInputType } from '../dto/login.input.entity';
+import { OutputClass } from '../dto/login.output.entity';
 import { LoginValidate } from '../extras/login-validate';
 import { loginQueryBuilder } from '../extras/query-builder';
-
 import { LoginService } from '../service/login.service';
 
-export class PipelineMapper {
-  constructor(protected readonly loginService: LoginService) {}
+export class LoginPipelineMapper {
+  constructor(public readonly loginService: LoginService) {}
   /**
    * validation of data
    * @param inputData PipelineDataflowControl
    * @returns Promise based PipelineDataflowControl
    */
-  public async validate(inputData): Promise<PipelineDataflowControl> {
+  public async loginValidate(
+    inputData,
+    pipelineDataflowControl: PipelineDataflowControl
+  ): Promise<PipelineDataflowControl> {
     const validationFlag = new LoginValidate(
       inputData,
       LoginModelInputType
     ).validate();
 
-    if (!validationFlag) {
+    if (validationFlag) {
       throw new BadRequestException(inputData);
     }
-    return new PipelineDataflowControl(inputData);
+    // return new PipelineDataflowControl(inputData);
+
+    pipelineDataflowControl.loginOriginalData = inputData;
+
+    return pipelineDataflowControl;
   }
 
   /**
@@ -30,16 +37,21 @@ export class PipelineMapper {
    * @param inputData PipelineDataflowControl
    * @returns Promise based PipelineDataflowControl
    */
-  public async queryBuilder(inputData: PipelineDataflowControl) {
+  public async loginQueryBuilder(
+    inputData: PipelineDataflowControl,
+    pipelineDataflowControl: PipelineDataflowControl
+  ) {
     try {
-      const { originalData } =
+      const { loginOriginalData } =
         (await inputData) as PipelineDataflowControl as unknown as {
-          originalData;
+          loginOriginalData;
         };
 
-      const queryData = await loginQueryBuilder(originalData);
+      const queryData = await loginQueryBuilder(loginOriginalData);
 
-      return new PipelineDataflowControl(originalData, queryData);
+      inputData.loginQueryData = queryData;
+
+      return pipelineDataflowControl;
     } catch (err) {
       throw new Error('Error in Query Building.');
     }
@@ -50,17 +62,22 @@ export class PipelineMapper {
    * @param inputData PipelineDataflowControl
    * @returns Promise based PipelineDataflowControl
    */
-  public async authenticateUser(
-    inputData: PipelineDataflowControl
+  public async loginAuthenticateUser(
+    inputData: PipelineDataflowControl,
+    pipelineDataflowControl: PipelineDataflowControl
   ): Promise<PipelineDataflowControl> {
-    const { originalData, queryData } =
+    const { loginOriginalData, loginQueryData } =
       (await inputData) as PipelineDataflowControl as unknown as {
-        originalData;
-        queryData;
+        loginOriginalData;
+        loginQueryData;
       };
     const user = await this.loginService.authenticateUser(inputData);
 
-    return new PipelineDataflowControl(originalData, queryData, user);
+    // return new PipelineDataflowControl(loginOriginalData, loginQueryData, user);
+
+    pipelineDataflowControl.loginUserData = user;
+
+    return pipelineDataflowControl;
   }
 
   /****************************************************************
@@ -68,39 +85,47 @@ export class PipelineMapper {
    * Build accessToken
    * */
 
-  public async buildJwtToken(inputData: PipelineDataflowControl) {
-    const { originalData, queryData, userData } =
+  public async loginBuildJwtToken(
+    inputData: PipelineDataflowControl,
+    pipelineDataflowControl: PipelineDataflowControl
+  ) {
+    const { loginUserData } =
       (await inputData) as PipelineDataflowControl as unknown as {
-        originalData;
-        queryData;
-        userData;
+        loginOriginalData;
+        loginQueryData;
+        loginUserData;
       };
 
-    const token = await this.loginService.buildJwtToken(userData);
-    return new PipelineDataflowControl(
-      originalData,
-      queryData,
-      userData,
-      token
-    );
+    const token = await this.loginService.buildJwtToken(loginUserData);
+
+    pipelineDataflowControl.loginJwtToken = token;
+
+    return pipelineDataflowControl;
   }
 
   /********************************
    * NOTE: Optional According to come API features
    */
-  public async constructOutputObject(inputData) {
-    const { userData, jwtToken } =
+  public async loginConstructOutputObject(
+    inputData,
+    pipelineDataflowControl: PipelineDataflowControl
+  ) {
+    const { loginUserData, loginJwtToken } =
       (await inputData) as PipelineDataflowControl as unknown as {
-        originalData;
-        queryData;
-        userData;
-        jwtToken;
+        loginUserData;
+        loginJwtToken;
       };
-    const { email } = userData;
-    class OutputClass {
-      constructor(public email: string, public token: string) {}
-    }
-    const outputClass = new OutputClass(email, jwtToken.toString());
-    return outputClass;
+    const { email, firstName, lastName, isEmailVerified } = loginUserData;
+
+    const outputClass = new OutputClass(
+      email,
+      loginJwtToken.toString(),
+      firstName,
+      lastName,
+      isEmailVerified
+    );
+
+    pipelineDataflowControl.loginOutputModel = outputClass;
+    return pipelineDataflowControl;
   }
 }

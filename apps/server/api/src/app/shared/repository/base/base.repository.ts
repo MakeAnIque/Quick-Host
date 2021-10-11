@@ -5,8 +5,8 @@ import { IWrite } from '../interfaces/iwrite.interface';
 export abstract class BaseRepository<T> implements IWrite<T>, IRead<T> {
   constructor(public readonly model: Model<T>) {}
 
-  async create(options: T): Promise<T> {
-    throw new Error('Method not implemented.');
+  async create(data): Promise<T> {
+    return new this.model(data);
   }
   async update(options: T): Promise<T> {
     throw new Error('Method not implemented.');

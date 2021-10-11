@@ -4,6 +4,17 @@
 
 type LoginModelObjectType {
   email: String!
+  firstName: String
+  lastName: String
+  isEmailVerified: Boolean
+  token: String!
+}
+
+type SignupModelObjectType {
+  email: String!
+  firstName: String
+  lastName: String
+  isEmailVerified: Boolean
   token: String!
 }
 
@@ -13,9 +24,17 @@ type Query {
 
 type Mutation {
   login(loginDto: LoginModelInputType!): LoginModelObjectType
+  signup(signupDto: SignupModelInputType!): SignupModelObjectType
 }
 
 input LoginModelInputType {
   email: String!
+  password: String!
+}
+
+input SignupModelInputType {
+  email: String!
+  firstName: String!
+  lastName: String!
   password: String!
 }

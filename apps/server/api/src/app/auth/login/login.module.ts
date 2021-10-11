@@ -25,5 +25,12 @@ import { UsersSchemaModule } from '@quickhost/server';
     ConfigService,
     LoginRepository,
   ],
+  exports: [
+    LoginService,
+    LoginRepository,
+    ConfigService,
+    JwtProviderModule,
+    PassportStrategyModule,
+  ],
 })
 export class LoginModule {}

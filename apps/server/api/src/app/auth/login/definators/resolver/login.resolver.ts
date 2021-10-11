@@ -5,7 +5,7 @@ import { LoginPipeline } from '../../pipeline/login.pipeline';
 
 @Resolver()
 export class LoginResolver {
-  constructor(private loginPipeline: LoginPipeline) {}
+  constructor(private readonly loginPipeline: LoginPipeline) {}
 
   @Query(() => String)
   async _() {
@@ -14,8 +14,10 @@ export class LoginResolver {
 
   @Mutation(() => LoginModelObjectType, { nullable: true })
   async login(@Args('loginDto') loginDto: LoginModelInputType) {
-    return await this.loginPipeline
+    const pipelineData: any = await this.loginPipeline
       .createObservablesEmit<LoginModelInputType>(loginDto)
       .initializePipeline<LoginModelInputType>();
+
+    return pipelineData.loginOutputModel;
   }
 }

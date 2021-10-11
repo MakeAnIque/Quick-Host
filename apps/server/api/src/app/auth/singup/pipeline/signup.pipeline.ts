@@ -1,18 +1,17 @@
+import { Injectable } from '@nestjs/common';
+import { thrownExceptionIdentifier } from '@quick-host/utils';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-
-import { Injectable } from '@nestjs/common';
-
-import { thrownExceptionIdentifier } from '@quick-host/utils';
+import { LoginService } from '../../login';
 import {
-  PipelineDataflowControl,
   pipelineDataflowControl,
+  PipelineDataflowControl,
 } from '../dto/factory-class/pipeline.factory.class';
-import { LoginService } from '../service/login.service';
-import { LoginPipelineMapper } from './pipeline.mapper';
+import { SignupService } from '../services/signup.service';
+import { SignupPipelineMapper } from './pipeline.mapper';
 
 @Injectable()
-export class LoginPipeline extends LoginPipelineMapper {
+export class SignupPipeline extends SignupPipelineMapper {
   private observables$;
   private dataTransferObject;
 
@@ -20,11 +19,14 @@ export class LoginPipeline extends LoginPipelineMapper {
    * all are injection injectable
    * @param loginRepository
    */
-  constructor(public readonly loginService: LoginService) {
-    super(loginService);
+  constructor(
+    public readonly signupService: SignupService,
+    public readonly loginService: LoginService
+  ) {
+    super(signupService, loginService);
   }
 
-  createObservablesEmit<T>(data: T): LoginPipeline {
+  createObservablesEmit<T>(data: T): SignupPipeline {
     this.observables$ = new Observable((subscription) => {
       this.dataTransferObject = data;
       subscription.next(data);
@@ -38,13 +40,25 @@ export class LoginPipeline extends LoginPipelineMapper {
         .pipe(
           switchMap(
             (data: T): Promise<PipelineDataflowControl> =>
-              this.loginValidate(data, pipelineDataflowControl)
+              this.signupValidate(data, pipelineDataflowControl)
           ),
           switchMap((data: PipelineDataflowControl) =>
-            this.loginQueryBuilder(data, pipelineDataflowControl)
+            this.signupQueryBuilder(data, pipelineDataflowControl)
           ),
           switchMap((data: PipelineDataflowControl) =>
-            this.loginAuthenticateUser(data, pipelineDataflowControl)
+            this.signupExtractUser(data, pipelineDataflowControl)
+          ),
+          switchMap((data: PipelineDataflowControl) =>
+            this.signupExtendsUserAdditionalDataObject(
+              data,
+              pipelineDataflowControl
+            )
+          ),
+          switchMap((data: PipelineDataflowControl) =>
+            this.signupCreateUser(data, pipelineDataflowControl)
+          ),
+          switchMap((data: PipelineDataflowControl) =>
+            this.signupShapeToLoginFlowControl(data, pipelineDataflowControl)
           ),
           switchMap((data: PipelineDataflowControl) =>
             this.loginBuildJwtToken(data, pipelineDataflowControl)
@@ -53,8 +67,11 @@ export class LoginPipeline extends LoginPipelineMapper {
             this.loginConstructOutputObject(data, pipelineDataflowControl)
           ),
 
+          //   switchMap((data: PipelineDataflowControl) => )
+
           catchError((error) => of(error))
         )
+
         .subscribe((data) => {
           /********************************
            * Error handling According to Exception thrown.

@@ -5,6 +5,9 @@ export type UsersDocument = Users & Document;
 
 @Schema()
 export class Users {
+  save() {
+    throw new Error('Method not implemented.');
+  }
   @Prop({ type: String })
   role: string | null;
 
@@ -66,7 +69,7 @@ export class Users {
   createDate: Date;
 
   @Prop({ type: Date })
-  modified: Date;
+  modifiedDate: Date;
 }
 
 export const UsersSchema = SchemaFactory.createForClass(Users);
