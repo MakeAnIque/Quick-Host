@@ -25,6 +25,7 @@ type Query {
 type Mutation {
   login(loginDto: LoginModelInputType!): LoginModelObjectType
   signup(signupDto: SignupModelInputType!): SignupModelObjectType
+  auth0LoginProcess(auth0Dto: Auth0InputModelType!): LoginModelObjectType
 }
 
 input LoginModelInputType {
@@ -37,4 +38,9 @@ input SignupModelInputType {
   firstName: String!
   lastName: String!
   password: String!
+}
+
+input Auth0InputModelType {
+  token: String!
+  accessToken: String!
 }

@@ -7,13 +7,16 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
-import * as helmet from 'helmet';
-import * as csurf from 'csurf';
+// import * as helmet from 'helmet';
+// import * as csurf from 'csurf';
 import * as fs from 'fs';
 
 async function bootstrap() {
   // let httpsOptions = {};
   // if (process.env.ENV_TYPE !== 'development') {
+  // let httpsOptions = {};
+
+  // if (process.env.ENV_NODE !== 'development') {
   //   httpsOptions = {
   //     key: fs.readFileSync(__dirname + '/assets/key.pem'),
   //     cert: fs.readFileSync(__dirname + '/assets/certificate.pem'),

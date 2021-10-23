@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@quick-host/constants": ["libs/constants/src/index.ts"],
+      "@quick-host/decorators": ["libs/decorator/src/index.ts"],
       "@quick-host/interfaces": ["libs/interfaces/src/index.ts"],
       "@quick-host/model": ["libs/model/src/index.ts"],
       "@quick-host/utils": ["libs/utils/src/index.ts"],

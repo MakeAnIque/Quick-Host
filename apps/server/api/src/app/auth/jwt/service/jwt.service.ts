@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { parseAccordingToPrefixType } from '@quick-host/utils';
-import { sign } from 'jsonwebtoken';
+import { sign, decode } from 'jsonwebtoken';
 
 @Injectable()
 export class JwtService {
@@ -17,5 +17,13 @@ export class JwtService {
         parseAccordingToPrefixType('env.JWT_SECRET')
       )
     );
+  }
+
+  public async decodeToken(token) {
+    try {
+      return await decode(token, { complete: true });
+    } catch (err) {
+      throw new Error('Invalid Token');
+    }
   }
 }

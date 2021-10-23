@@ -11,6 +11,5 @@ export class LoginModelInputType {
 
   @Field(() => String)
   @IsString()
-  @IsNotEmpty()
   readonly password?: string;
 }

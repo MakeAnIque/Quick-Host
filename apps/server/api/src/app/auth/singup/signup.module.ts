@@ -9,5 +9,6 @@ import { SignupService } from './services/signup.service';
 @Module({
   imports: [UsersSchemaModule, LoginModule],
   providers: [SignupResolver, SignupPipeline, SignupService, SignupRepository],
+  exports: [SignupService],
 })
 export class SignupModule {}

@@ -11,6 +11,7 @@ import {
   parseAccordingToPrefixType,
 } from '@quick-host/utils';
 import { environment } from '../../environments/environment';
+import { ThirdPartyAuthModule } from '../auth/index';
 
 export const modules = [
   GraphQLModule.forRoot({
@@ -42,4 +43,5 @@ export const modules = [
   }),
   LoginModule,
   SignupModule,
+  ThirdPartyAuthModule,
 ];

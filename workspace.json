@@ -33,6 +33,39 @@
         }
       }
     },
+    "decorator": {
+      "root": "libs/decorator",
+      "sourceRoot": "libs/decorator/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/decorator",
+            "tsConfig": "libs/decorator/tsconfig.lib.json",
+            "packageJson": "libs/decorator/package.json",
+            "main": "libs/decorator/src/index.ts",
+            "assets": ["libs/decorator/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/decorator/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/decorator"],
+          "options": {
+            "jestConfig": "libs/decorator/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "interfaces": {
       "root": "libs/interfaces",
       "sourceRoot": "libs/interfaces/src",

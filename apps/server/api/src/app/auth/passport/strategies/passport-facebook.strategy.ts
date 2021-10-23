@@ -1,14 +1,24 @@
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
+import { parseAccordingToPrefixType } from '@quick-host/utils';
 import { Strategy } from 'passport-facebook';
 import { CredentialFactory } from '../cred-factory/credential-class.factory';
 import { FacebookResponse } from '../interfaces/facebook.interface';
 
+@Injectable()
 export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
-  constructor() {
+  constructor(private readonly configService: ConfigService) {
     super({
-      clientID: '966012983963073',
-      clientSecret: '18f35ba035dc9e87b428dee18041c614',
-      callbackURL: 'https://localhost:3333/api/auth/facebook/redirect',
+      clientID: configService.get<string>(
+        parseAccordingToPrefixType('env.FACEBOOK_CLIENT_ID')
+      ),
+      clientSecret: configService.get<string>(
+        parseAccordingToPrefixType('env.FACEBOOK_CLIENT_SECRET')
+      ),
+      callbackURL: configService.get<string>(
+        parseAccordingToPrefixType('env.FACEBOOK_CALLBACK_URL')
+      ),
       scope: ['email'],
       profileFields: ['id', 'name', 'displayName', 'photos', 'email', 'gender'],
     });

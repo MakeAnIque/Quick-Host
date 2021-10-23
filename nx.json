@@ -30,6 +30,9 @@
     "constants": {
       "tags": ["type:libs", "platform: common"]
     },
+    "decorator": {
+      "tags": ["type:lib", ""]
+    },
     "interfaces": {
       "tags": ["type:libs", "platform: common"]
     },
