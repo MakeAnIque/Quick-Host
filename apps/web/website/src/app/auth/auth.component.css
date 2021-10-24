@@ -1,0 +1,9 @@
+.authSvg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: whitesmoke;
+  background-image: url('../../assets/svg-img/wave.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
